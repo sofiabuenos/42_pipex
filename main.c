@@ -191,12 +191,35 @@ int	exercise_5(int ac, char **av)
 	}
 	return (0);
 }
+
+int exercise_6()
+{
+	int fd_output = open("output.txt", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+    if (fd_output == -1) {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    // Redireciona stdout para o arquivo output.txt
+    if (dup2(fd_output, STDOUT_FILENO) == -1) {
+        perror("Erro ao redirecionar stdout");
+        close(fd_output); // Fecha o descritor de arquivo se dup2 falhar
+        return 1;
+    }
+
+    // Agora, qualquer saída do programa será escrita em output.txt
+    printf("Hello, World!\n");
+
+    close(fd_output); // Fecha o descritor de arquivo após terminar
+    return 0;
+}
 int main(int ac, char **av)
 {
 	//exercise_1();
 	//exercise_2();
 	//exercise_3();
 	//exercise_4();
-	exercise_5(ac, av);
+	//exercise_5(ac, av);
+	exercise_6();
 	return (0);
 }
