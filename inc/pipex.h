@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:36:20 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/07/23 19:04:25 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/07/24 16:07:46 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,7 @@
 
 
 void	system_error(const char *msg);
+void	child_task(char **av, int fd[]);
+void	parent_task(char **av, int fd[]);
+void	ft_free_matrix(char **matrix);
 #endif
