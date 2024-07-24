@@ -35,7 +35,7 @@ $(OBJD)%.o: $(SRCD)%.c
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(PRINTF)
-	$(CC) $(CFLAGS) $(INC) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(INC) $(OBJS) $(LIBFT) $(PRINTF) -o $(NAME)
 	echo "$(GREEN)All files compiled!$(RESET)"
 
 $(LIBFT):
