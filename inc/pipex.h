@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:36:20 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/07/24 16:07:46 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:09:53 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,20 @@
 # include "../libft/libft.h"
 # include "../ft_printf/ft_printf.h"
 
+/* Stucts */
 
-void	system_error(const char *msg);
-void	child_task(char **av, int fd[]);
-void	parent_task(char **av, int fd[]);
-void	ft_free_matrix(char **matrix);
+typedef struct s_exec
+{
+	char	*pathname;
+	char	**args;
+	char	**dirs;
+}			t_exec;
+
+void	system_error(char *msg);
+void	system_error2(t_exec *exec, char *msg);
+void	child_task(char **av, int *fd, char *envp[]);
+void	parent_task(char **av, int *fd, char *envp[]);
+void	run_cmdx(char *cmdx, char **envp);
+void	get_right_path(t_exec *exec, char **envp);
+void	free_matrix(char **matrix);
 #endif

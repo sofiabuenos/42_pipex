@@ -25,7 +25,8 @@ OBJD = obj/
 #FILES
 SRCS =	$(SRCD)main.c \
 		$(SRCD)error.c \
-		$(SRCD)pipex.c
+		$(SRCD)pipex.c \
+		$(SRCD)utils.c
 
 OBJS = $(patsubst $(SRCD)%.c, $(OBJD)%.o, $(SRCS))
 $(OBJD)%.o: $(SRCD)%.c
