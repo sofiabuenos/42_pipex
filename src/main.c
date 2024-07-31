@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:35:54 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/07/26 20:06:26 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/07/27 16:57:48 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 /**
  * dup2(infile, STDIN_FILENO) -> redirects stdin to indile;
  * dup2(fd[1], STDOUT_FILENO  -> redirects stdout to the pipe's writing fd;
+ * closes unused fd - fd[0] - reading end of the pipe. 
+ * closes infile because after running dup the process ends.
  */
 void	child_task(char **av, int *fd, char *envp[])
 {
@@ -30,7 +32,9 @@ void	child_task(char **av, int *fd, char *envp[])
 	close(infile);
 	run_cmdx(av[2], envp);
 }
-
+/**
+ * redirects stdout to outfile
+ */
 void	parent_task(char **av, int *fd, char *envp[])
 {
 	int	outfile;
@@ -72,3 +76,5 @@ int	main(int ac, char **av, char *envp[])
 		ft_putstr_fd("Check parameters. Please use: ./pipex infile cmd1 cmd2 outfile\n", 2);
 	return (0);
 }
+
+

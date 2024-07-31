@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:16:00 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/07/26 20:08:59 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/07/27 17:04:36 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	get_right_path(t_exec *exec, char **envp)
 
 	found = 0;
 	i = -1;
-	while(envp[++i])
+	while(envp[++i]) // verificar se env n~ao ' nulo env -i ./pipex ...
 	{
 		if (ft_strnstr(envp[i], "PATH=", 5))
 		{
@@ -80,6 +80,6 @@ void	get_right_path(t_exec *exec, char **envp)
 		find_and_set_executable_path(exec);
 	}
 	else
-		system_error2(exec, "Variable PATH not found\n");
+		system_error2(exec, "Variable PATH not found\n"); // deixar a execve tentar executar o comando com pathname = argv[0]
 	
 }
