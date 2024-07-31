@@ -6,7 +6,7 @@
 /*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:16:00 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/07/26 20:08:59 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/07/30 16:41:34 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	find_and_set_executable_path(t_exec *exec)
 	}
 	if (path_tmp)
 		free(path_tmp); 
-	system_error2(exec, "No valid pathname found\n");
+	system_error2(exec, "No valid pathname found");
 }
 
 /**
@@ -80,6 +80,22 @@ void	get_right_path(t_exec *exec, char **envp)
 		find_and_set_executable_path(exec);
 	}
 	else
-		system_error2(exec, "Variable PATH not found\n");
+	{
+		exec->pathname = exec->args[0];
+		//system_error2(exec, "Variable PATH not found\n");
+	}
 	
+}
+
+int	find_slash(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '/')
+			return (0);
+	}
+	return (1);
 }

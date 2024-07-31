@@ -6,7 +6,7 @@
 /*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:36:20 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/07/26 20:09:53 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/07/30 14:36:53 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ void	parent_task(char **av, int *fd, char *envp[]);
 void	run_cmdx(char *cmdx, char **envp);
 void	get_right_path(t_exec *exec, char **envp);
 void	free_matrix(char **matrix);
+int		find_slash(char *str);
 #endif
