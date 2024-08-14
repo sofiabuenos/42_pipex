@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:35:54 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/07/30 16:32:58 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/07/31 18:26:32 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int ac, char **av, char *envp[])
 	int	fd[2];
 	int	pid;
 	int	wstatus;
-
+	// printf("PID do processo pai: %d\n\n\n", getpid());
 	if (ac == 5)
 	{
 		if (pipe(fd) == -1)

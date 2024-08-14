@@ -12,7 +12,7 @@ WHITE 	= \033[1;37m
 #PROGRAM NAME | COMPILER | FLAGS 
 NAME = pipex
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g  
 RM = rm -fr
 
 #PATHS
@@ -46,6 +46,10 @@ $(LIBFT):
 
 $(PRINTF):
 	make -s -C ft_printf
+
+#valgrind:
+#	@make
+#	@valgrind --quiet --leak-check=full --show-leak-kinds=all --track-origins=yes --tool=memcheck
 
 clean:
 	$(RM) $(OBJS)

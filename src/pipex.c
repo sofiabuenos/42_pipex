@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:19:06 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/07/30 17:08:44 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/07/31 16:17:59 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	run_cmdx(char *cmdx, char **envp)
 
 	ft_bzero(&exec, sizeof(t_exec));
 	find_pathname(&exec, cmdx, envp);
-	fix_vector(&exec);
+	//fix_vector(&exec);
 	if(execve(exec.pathname, exec.args, envp)== -1)
 		system_error2(&exec, "Error executing command");
 }

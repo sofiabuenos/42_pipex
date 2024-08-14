@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:16:00 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/07/30 16:41:34 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/07/31 15:58:17 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	find_and_set_executable_path(t_exec *exec)
 			free(path_tmp);
 			return; 
 		}
+		if (path_tmp)
+			free(path_tmp); 
 	}
-	if (path_tmp)
-		free(path_tmp); 
 	system_error2(exec, "No valid pathname found");
 }
 
