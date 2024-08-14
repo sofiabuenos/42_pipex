@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:19:06 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/14 15:18:27 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/14 15:58:12 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@
 void	fork_and_execute(t_cmdx *cmds, int ac, char **av, char *envp[])
 {
 	int	i;
-	int	pid[cmds->num_cmd];
 
 	i = -1;
 	while (++i < cmds->num_cmd)
 	{
-		pid[i] = fork();
-		if (pid[i] == -1)
+		cmds->pids[i] = fork();
+		if (cmds->pids[i] == -1)
 			system_error2(cmds, "Fork");
-		if (pid[i] == 0)
+		if (cmds->pids[i] == 0)
 		{
 			if (i == 0)
 				infile_redirect(cmds, av);
@@ -42,7 +41,14 @@ void	fork_and_execute(t_cmdx *cmds, int ac, char **av, char *envp[])
 	}
 	close_fds(cmds);
 	wait_for_child(cmds);
-	// liberar cmds-cmd
+	free_mem(cmds);
+}
+
+void	alloc_pids_arr(t_cmdx *cmds)
+{
+	cmds->pids = (pid_t *)malloc(sizeof(pid_t) * cmds->num_cmd);
+	if (!cmds->pids)
+		system_error2(cmds, "Memory allocation issue - pids array");
 }
 
 /**
@@ -97,5 +103,6 @@ void	run_pipex(int ac, char **av, char *envp[])
 	ft_bzero(&cmds, sizeof(t_cmdx));
 	commands_init(&cmds, ac, av);
 	create_pipes(&cmds);
+	alloc_pids_arr(&cmds);
 	fork_and_execute(&cmds, ac, av, envp);
 }

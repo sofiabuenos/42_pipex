@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:36:20 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/13 18:49:45 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/14 15:52:47 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_cmdx
 	t_pipe_fds	*p_fds;
 	char		**cmd;
 	int			num_cmd;
+	pid_t		*pids;
 }				t_cmdx;
 
 /*PIPEX*/
@@ -71,5 +72,6 @@ int		find_slash(char *str);
 void	system_error(char *msg);
 void	system_error2(t_cmdx *cmds, char *msg);
 void	free_matrix(char **matrix);
+void	free_mem(t_cmdx *cmds);
 
 #endif
