@@ -1,25 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exercises.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/13 18:41:01 by sofiabueno        #+#    #+#             */
+/*   Updated: 2024/08/13 18:49:00 by sofiabueno       ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 // #include <stdio.h>
 // #include <string.h>
 // #include <stdlib.h>
-// #include <unistd.h>   // pipe
-// #include <sys/wait.h> // para resultados do wait
+// #include <unistd.h>
+// #include <sys/wait.h>
 // #include <sys/types.h> 
-// #include <fcntl.h>    // to use open and close
-// #include <errno.h>    //global variab;e that indicates the most recent error ocurred on a program
+// #include <fcntl.h>
+// #include <errno.h>
 
 // // UNIX PROCESSES IN C - CodeVault
 // // FORK () //
 // /**
-//  * A process is an instance of a running program. Every single process in linux has a PID
+//  * A process is an instance of a running program. 
+//  * Every single process in linux has a PID
 //  * Processes can create other processes, called child processes.
 //  * 
-//  * The fork() function is used to create a new child process from the main process.
-//  * 
+//  * The fork() function is used to create a new child process 
+//  * from the main process.
 //  * Fork function clones the calling process, creating an exact copy.
-//  * This means that the parent's process memory is being copied value by value but in different
+//  * This means that the parent's process memory is being copied value 
+//  * by value but in different
 //  * memory adresses (like a dup)
 //  * 
-//  * Fork function returns -1 for errors, 0 for the child process and the ID of the parent process
+//  * Fork function returns -1 for errors.
+//  * The fork() function returns 0 in the child process. 
+//  * This 0 is not the process ID (PID); 
+//  * rather, it is just an indication from fork() that the process is 
+//  * the child.
+//  * In the parent process, fork() returns the PID of the newly created child 
+//  * process.
+//  * 
 //  * Everything that is below the fork function is duplicated.
 //  */
 
@@ -46,11 +67,12 @@
 //  * function wait() is a handy resource for waiting processes to finish
 //  * 
 //  * pid_t wait(int *status);
- 
+
 //  * function wait waits for the return (0) of the other function to proceed
 //  * with the other remaining process.
 //  * 
-//  * function wait returns the child process pid or -1 if there's an error or no child to wait for.
+//  * function wait returns the child process pid or -1 if 
+//  * there's an error or no child to wait for.
 
 //  * we call fflush because we want to print the numbers at the exact time
 //  * as they are called, since printf has a buffer it wouldn't allow it.
@@ -81,15 +103,19 @@
 //  * pid_t getpid(void); -> return the current id
 //  * pid_t getppid(void); -> returns the parent id
 //  * 
-//  *  ! if the parent terminates before the child does, we will have memory leak.
-//  * This happens because the child is assigned another parent id because the (first)
-//  * parent had already terminated while the child was still running. So, when we try 
-//  * to kill the process, it is not going to actually free the memory. 
+//  *  ! if the parent terminates before the child does, 
+//  * we will have memory leak.
+//  * This happens because the child is assigned another parent id because the
+//  * (first) parent had already terminated while the child was still running.
+//  *  So, when we try to kill the process, it is not going to actually 
+//  * free the memory.
 //  * -> so, ALWAYS WAIT FOR THE CHILD PROCESSES TO FINISH <-
-//  * Therefore, it is good practice to call wait() in the end of each function that uses fork().
+//  * Therefore, it is good practice to call wait() in the end of each function 
+//  * that uses fork().
 //  * 
-//  * function wait returns -1 if there is nothing to wait for or the id of the process you
-//  * actually waited for.
+//  * function wait returns -1 if there is nothing to wait for or the 
+//  * id of the process you actually waited for.
+
 //  * Example of what I got when running the code:
 //  * Current ID: 23047, Parent ID: 5214 |-> parent
 //  * Current ID: 23049, Parent ID: 23047|-> child
@@ -116,9 +142,12 @@
 //  * 
 //  * while (wait(NULL) != -1 || errno != ECHILD)
 //  * wait(NULL) != -1 -> keeps waiting while `wait`returns a valid pid
-//  * ECHILD -> informs whether the parent process still has child processes to wait for.
-//  * Quando você usa a função wait ou waitpid, estas funções retornam -1 se ocorre um erro. 
-//  * Se o erro for devido à ausência de processos filhos (todos os filhos já terminaram), errno é definido como ECHILD.
+//  * ECHILD -> informs whether the parent process still has child processes 
+//  * to wait for.
+//  * Quando você usa a função wait ou waitpid, estas funções retornam -1 se 
+//  * ocorre um erro. 
+//  * Se o erro for devido à ausência de processos filhos 
+//  * (todos os filhos já terminaram), errno é definido como ECHILD.
 //  */
 // int	exercise_4()
 // {
@@ -143,8 +172,10 @@
 // 	return (0);
 // }
 // /** PIPE FUNCTION
-//  * A pipe is like an in-memory file. it is like a buffer from which we can write and read.
-//  * it takes an array of two integers that will be used to save the file descriptors used to comunicate between one end and the other.
+//  * A pipe is like an in-memory file. it is like a buffer from
+//  *  which we can write and read.
+//  * it takes an array of two integers that will be used to save 
+//  * the file descriptors used to comunicate between one end and the other.
 //  * returns 0 if sucessful and -1 if there's a mistake
 //  */
 
@@ -194,7 +225,8 @@
 
 // int exercise_6()
 // {
-// 	int fd_output = open("output.txt", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+// 	int fd_output = open("output.txt", O_WRONLY | O_CREAT |
+//        O_TRUNC, S_IRUSR | S_IWUSR);
 //     if (fd_output == -1) {
 //         perror("Erro ao abrir o arquivo");
 //         return 1;

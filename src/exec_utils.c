@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:16:00 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/07/30 16:41:34 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/13 16:53:40 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,77 +14,74 @@
 
 /**
  * UTILS LEGIT: YES
- * Verificar se nesse caso usaria mesmo system error ou outra forma de encerrar o programa
+ * Verificar se nesse caso usaria mesmo system error ou outra forma 
+ * de encerrar o programa
  */
-char *concatenate(t_exec *exec, char *dir)
+char	*concatenate(t_cmdx *cmds, char *dir)
 {
-	char *temp;
-	char *path_name;
+	char	*temp;
+	char	*path_name;
 
 	temp = ft_strjoin(dir, "/");
 	if (!temp)
-		system_error2(exec, "join failed");
-	path_name = ft_strjoin(temp, exec->args[0]);
+		system_error2(cmds, "join failed");
+	path_name = ft_strjoin(temp, cmds->exec->args[0]);
 	free(temp);
 	if (!path_name)
-		system_error2(exec, "join failed");
-	return path_name;
+		system_error2(cmds, "join failed");
+	return (path_name);
 }
 
 /**
  * UTILS LEGIT: YES
  */
-void	find_and_set_executable_path(t_exec *exec)
+void	find_and_set_executable_path(t_cmdx *cmds)
 {
 	int		i;
 	char	*path_tmp;
 
 	path_tmp = NULL;
 	i = -1;
-	while (exec->dirs[++i])
+	while (cmds->exec->dirs[++i])
 	{
-		path_tmp = concatenate(exec, exec->dirs[i]);
+		path_tmp = concatenate(cmds, cmds->exec->dirs[i]);
 		if (access(path_tmp, X_OK) == 0)
 		{
-			exec->pathname = ft_strdup(path_tmp);
+			cmds->exec->pathname = ft_strdup(path_tmp);
 			free(path_tmp);
-			return; 
+			return ;
 		}
 	}
 	if (path_tmp)
-		free(path_tmp); 
-	system_error2(exec, "No valid pathname found");
+		free(path_tmp);
+	system_error2(cmds, "No valid pathname found");
 }
 
 /**
  * UTILS LEGIT: YES
  */
-void	get_right_path(t_exec *exec, char **envp)
+void	get_right_path(t_cmdx *cmds, char **envp)
 {
 	int	found;
 	int	i;
 
 	found = 0;
 	i = -1;
-	while(envp[++i])
+	while (envp[++i])
 	{
 		if (ft_strnstr(envp[i], "PATH=", 5))
 		{
 			found = 1;
-			break;
+			break ;
 		}
 	}
 	if (found == 1)
 	{
-		exec->dirs = ft_split(envp[i] + 5, ':');
-		find_and_set_executable_path(exec);
+		cmds->exec->dirs = ft_split(envp[i] + 5, ':');
+		find_and_set_executable_path(cmds);
 	}
 	else
-	{
-		exec->pathname = exec->args[0];
-		//system_error2(exec, "Variable PATH not found\n");
-	}
-	
+		cmds->exec->pathname = cmds->exec->args[0];
 }
 
 int	find_slash(char *str)
