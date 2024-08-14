@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:38:45 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/08/13 18:59:01 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/14 20:28:03 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,8 @@ void	run_cmdx(t_cmdx *cmds, char *cmd_i, char **envp)
 	cmds->exec = &exec;
 	find_pathname(cmds, cmd_i, envp);
 	if (execve(exec.pathname, exec.args, envp) == -1)
+	{
+		cmds->status = 127;
 		system_error2(cmds, "Error executing command");
+	}
 }

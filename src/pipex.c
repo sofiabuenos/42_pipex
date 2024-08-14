@@ -6,7 +6,7 @@
 /*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:19:06 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/14 15:58:12 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:35:17 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 void	fork_and_execute(t_cmdx *cmds, int ac, char **av, char *envp[])
 {
 	int	i;
+	int	child_status;
 
 	i = -1;
 	while (++i < cmds->num_cmd)
@@ -40,8 +41,9 @@ void	fork_and_execute(t_cmdx *cmds, int ac, char **av, char *envp[])
 		}
 	}
 	close_fds(cmds);
-	wait_for_child(cmds);
+	child_status = wait_for_child(cmds);
 	free_mem(cmds);
+	exit(child_status);
 }
 
 void	alloc_pids_arr(t_cmdx *cmds)
@@ -79,6 +81,7 @@ void	commands_init(t_cmdx *cmds, int ac, char **av)
 {
 	int		i;
 
+	cmds->status = 1;
 	cmds->num_cmd = ac - 3;
 	cmds->cmd = (char **)malloc(sizeof(char *) * (cmds->num_cmd + 1));
 	if (!cmds->cmd)

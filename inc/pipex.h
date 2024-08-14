@@ -6,7 +6,7 @@
 /*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:36:20 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/14 15:52:47 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:28:29 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ typedef struct s_cmdx
 {
 	t_exec		*exec;
 	t_pipe_fds	*p_fds;
+	pid_t		*pids;
 	char		**cmd;
 	int			num_cmd;
-	pid_t		*pids;
+	int			status;
 }				t_cmdx;
 
 /*PIPEX*/
@@ -62,7 +63,7 @@ void	close_fds(t_cmdx *cmds);
 void	infile_redirect(t_cmdx *cmds, char **av);
 void	outfile_redirect(t_cmdx *cmds, int ac, char **av, int i);
 void	std_redirect(t_cmdx *cmds, int i);
-void	wait_for_child(t_cmdx *cmds);
+int		wait_for_child(t_cmdx *cmds);
 /*EXEC*/
 void	run_cmdx(t_cmdx *cmds, char *cmd_i, char **envp);
 /*EXEC_UTILS*/

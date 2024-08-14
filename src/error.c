@@ -6,7 +6,7 @@
 /*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:02:25 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/14 16:00:28 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:28:58 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	free_matrix(char **matrix)
 		return ;
 	while (matrix[++i])
 		free(matrix[i]);
+	// free(matrix[i]);
 	free(matrix);
 }
 
@@ -39,6 +40,9 @@ void	free_mem(t_cmdx *cmds)
 
 void	system_error2(t_cmdx *cmds, char *msg)
 {
+	int exitstatus;
+	
+	exitstatus = cmds->status;
 	free_mem(cmds);
 	if (cmds->exec && cmds->exec->args)
 		free_matrix(cmds->exec->args);
@@ -47,7 +51,7 @@ void	system_error2(t_cmdx *cmds, char *msg)
 	if (cmds->exec && cmds->exec->pathname)
 		free(cmds->exec->pathname);
 	perror(msg);
-	exit(EXIT_FAILURE);
+	exit(exitstatus);
 }
 
 void	system_error(char *msg)

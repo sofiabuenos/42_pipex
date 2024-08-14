@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:16:00 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/08/13 16:53:40 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/14 20:37:22 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,9 @@ void	find_and_set_executable_path(t_cmdx *cmds)
 			free(path_tmp);
 			return ;
 		}
-	}
-	if (path_tmp)
 		free(path_tmp);
-	system_error2(cmds, "No valid pathname found");
+	}
+	cmds->exec->pathname = ft_strdup(cmds->exec->args[0]);
 }
 
 /**

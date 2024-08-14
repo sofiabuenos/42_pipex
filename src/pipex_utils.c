@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:16:56 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/08/13 16:02:26 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/14 19:20:06 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,18 @@ void	std_redirect(t_cmdx *cmds, int i)
 	dup2(cmds->p_fds[i].fd[1], STDOUT_FILENO);
 }
 
-void	wait_for_child(t_cmdx *cmds)
+int	wait_for_child(t_cmdx *cmds)
 {
 	int	i;
+	int	wstatus;
 
 	i = -1;
 	while (++i < cmds->num_cmd)
-		wait(NULL);
+	{
+		waitpid(cmds->pids[i], &wstatus, 0);
+	}
+	if (WIFEXITED(wstatus))
+		return(WEXITSTATUS(wstatus));
+	return(0) ;
 }
+
