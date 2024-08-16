@@ -24,11 +24,11 @@ OBJD = obj/
 
 #FILES
 SRCS =	$(SRCD)main.c \
-		$(SRCD)error.c \
+		$(SRCD)handle_errors.c \
 		$(SRCD)pipex.c \
-		$(SRCD)exec.c \
-		$(SRCD)exec_utils.c \
-		$(SRCD)pipex_utils.c
+		$(SRCD)run_cmd.c \
+		$(SRCD)run_cmd_utils.c \
+		$(SRCD)redirect_and_wait.c
 
 OBJS = $(patsubst $(SRCD)%.c, $(OBJD)%.o, $(SRCS))
 $(OBJD)%.o: $(SRCD)%.c

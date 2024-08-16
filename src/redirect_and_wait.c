@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:16:56 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/08/14 19:20:06 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:13:19 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-void	close_fds(t_cmdx *cmds)
+void	close_fds(t_pipex *pipex)
 {
 	int	i;
 
 	i = -1;
-	while (++i < cmds->num_cmd - 1)
+	while (++i < pipex->num_cmd - 1)
 	{
-		close(cmds->p_fds[i].fd[0]);
-		close(cmds->p_fds[i].fd[1]);
+		close(pipex->p_fds[i].fd[0]);
+		close(pipex->p_fds[i].fd[1]);
 	}
 }
 
-void	infile_redirect(t_cmdx *cmds, char **av)
+void	infile_redirect(t_pipex *pipex, char **av)
 {
 	int	infile;
 
@@ -35,13 +35,13 @@ void	infile_redirect(t_cmdx *cmds, char **av)
 	}
 	infile = open(av[1], O_RDONLY);
 	if (infile == -1)
-		system_error("Error opening infile");
+		system_error(pipex, "Error opening infile");
 	dup2(infile, STDIN_FILENO);
-	dup2(cmds->p_fds[0].fd[1], STDOUT_FILENO);
+	dup2(pipex->p_fds[0].fd[1], STDOUT_FILENO);
 	close(infile);
 }
 
-void	outfile_redirect(t_cmdx *cmds, int ac, char **av, int i)
+void	outfile_redirect(t_pipex *pipex, int ac, char **av, int i)
 {
 	int	outfile;
 
@@ -52,30 +52,29 @@ void	outfile_redirect(t_cmdx *cmds, int ac, char **av, int i)
 	}
 	outfile = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile == -1)
-		system_error2 (cmds, "Error opening file");
-	dup2(cmds->p_fds[i - 1].fd[0], STDIN_FILENO);
+		system_error (pipex, "Error opening file");
+	dup2(pipex->p_fds[i - 1].fd[0], STDIN_FILENO);
 	dup2(outfile, STDOUT_FILENO);
 	close(outfile);
 }
 
-void	std_redirect(t_cmdx *cmds, int i)
+void	std_redirect(t_pipex *pipex, int i)
 {
-	dup2(cmds->p_fds[i - 1].fd[0], STDIN_FILENO);
-	dup2(cmds->p_fds[i].fd[1], STDOUT_FILENO);
+	dup2(pipex->p_fds[i - 1].fd[0], STDIN_FILENO);
+	dup2(pipex->p_fds[i].fd[1], STDOUT_FILENO);
 }
 
-int	wait_for_child(t_cmdx *cmds)
+int	wait_for_child(t_pipex *pipex)
 {
 	int	i;
 	int	wstatus;
 
 	i = -1;
-	while (++i < cmds->num_cmd)
+	while (++i < pipex->num_cmd)
 	{
-		waitpid(cmds->pids[i], &wstatus, 0);
+		waitpid(pipex->pids[i], &wstatus, 0);
 	}
 	if (WIFEXITED(wstatus))
-		return(WEXITSTATUS(wstatus));
-	return(0) ;
+		return (WEXITSTATUS(wstatus));
+	return (0);
 }
-

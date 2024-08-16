@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:36:20 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/14 20:28:29 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:47:01 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 /* Stucts */
 
 /*Structure which contains an array of integers - a pipe's couple of fds*/
-typedef struct s_pipe_fds
+typedef struct s_fds
 {
 	int	fd[2];
-}		t_pipe_fds;
+}		t_fds;
 
 /*Structure which keeps execve's arguments*/
 typedef struct s_exec
@@ -46,33 +46,38 @@ typedef struct s_exec
  * **cmd   = arr that contains all the commands passed as the program arguments;
  * num_cmd = number of commands;
  */
-typedef struct s_cmdx
+typedef struct s_pipex
 {
 	t_exec		*exec;
-	t_pipe_fds	*p_fds;
+	t_fds		*p_fds;
 	pid_t		*pids;
 	char		**cmd;
 	int			num_cmd;
 	int			status;
-}				t_cmdx;
+}				t_pipex;
 
 /*PIPEX*/
-void	run_pipex(int ac, char **av, char *envp[]);
-/*PIPEX_UTILS*/
-void	close_fds(t_cmdx *cmds);
-void	infile_redirect(t_cmdx *cmds, char **av);
-void	outfile_redirect(t_cmdx *cmds, int ac, char **av, int i);
-void	std_redirect(t_cmdx *cmds, int i);
-int		wait_for_child(t_cmdx *cmds);
-/*EXEC*/
-void	run_cmdx(t_cmdx *cmds, char *cmd_i, char **envp);
+void	init_pipex(t_pipex *pipex, int ac);
+void	commands_init(t_pipex *pipex, char **av);
+void	create_pipes(t_pipex *pipex);
+void	alloc_pids_arr(t_pipex *pipex);
+void	fork_and_execute(t_pipex *pipex, int ac, char **av, char *envp[]);
+/*REDIRECT AND WAIT*/
+void	close_fds(t_pipex *pipex);
+void	infile_redirect(t_pipex *pipex, char **av);
+void	outfile_redirect(t_pipex *pipex, int ac, char **av, int i);
+void	std_redirect(t_pipex *pipex, int i);
+int		wait_for_child(t_pipex *pipex);
+/*RUN CMD*/
+void	run_cmdx(t_pipex *pipex, char *cmd_i, char **envp);
 /*EXEC_UTILS*/
-void	get_right_path(t_cmdx *cmds, char **envp);
+void	get_right_path(t_pipex *pipex, char **envp);
 int		find_slash(char *str);
+char	*concatenate(t_pipex *pipex, char *dir);
 /*ERRORS*/
-void	system_error(char *msg);
-void	system_error2(t_cmdx *cmds, char *msg);
+void	ft_error(char *msg);
+void	system_error(t_pipex *pipex, char *msg);
 void	free_matrix(char **matrix);
-void	free_mem(t_cmdx *cmds);
+void	free_mem(t_pipex *pipex);
 
 #endif

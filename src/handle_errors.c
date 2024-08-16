@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:02:25 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/14 20:28:58 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:11:03 by sofiabueno       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,41 +21,40 @@ void	free_matrix(char **matrix)
 		return ;
 	while (matrix[++i])
 		free(matrix[i]);
-	// free(matrix[i]);
 	free(matrix);
 }
 
-void	free_mem(t_cmdx *cmds)
+void	free_mem(t_pipex *pipex)
 {
-	if (cmds->cmd)
-		free_matrix(cmds->cmd);
-	if (cmds->p_fds)
+	if (pipex->cmd)
+		free_matrix(pipex->cmd);
+	if (pipex->p_fds)
 	{
-		free(cmds->p_fds);
-		cmds->p_fds = NULL;
+		free(pipex->p_fds);
+		pipex->p_fds = NULL;
 	}
-	if (cmds->pids)
-		free(cmds->pids);
+	if (pipex->pids)
+		free(pipex->pids);
 }
 
-void	system_error2(t_cmdx *cmds, char *msg)
+void	system_error(t_pipex *pipex, char *msg)
 {
-	int exitstatus;
-	
-	exitstatus = cmds->status;
-	free_mem(cmds);
-	if (cmds->exec && cmds->exec->args)
-		free_matrix(cmds->exec->args);
-	if (cmds->exec && cmds->exec->dirs)
-		free_matrix(cmds->exec->dirs);
-	if (cmds->exec && cmds->exec->pathname)
-		free(cmds->exec->pathname);
+	int	exitstatus;
+
+	exitstatus = pipex->status;
+	free_mem(pipex);
+	if (pipex->exec && pipex->exec->args)
+		free_matrix(pipex->exec->args);
+	if (pipex->exec && pipex->exec->dirs)
+		free_matrix(pipex->exec->dirs);
+	if (pipex->exec && pipex->exec->pathname)
+		free(pipex->exec->pathname);
 	perror(msg);
 	exit(exitstatus);
 }
 
-void	system_error(char *msg)
+void	ft_error(char *msg)
 {
-	perror(msg);
+	ft_putstr_fd(msg, 2);
 	exit(EXIT_FAILURE);
 }
