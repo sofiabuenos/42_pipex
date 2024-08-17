@@ -1,5 +1,11 @@
+laranja
 banana
+<<<<<<< HEAD
 apple
 pear
 peach
 secret message
+=======
+abacaxi
+uva
+>>>>>>> multiple_pipes

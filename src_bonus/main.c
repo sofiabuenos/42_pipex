@@ -6,7 +6,7 @@
 /*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:35:54 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/16 21:14:46 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/16 21:14:29 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_pipex	pipex;
 
-	if (ac != 5)
+	if (ac < 5)
 		ft_error("Usage: ./pipex infile cmd1 cmd2 outfile\n");
 	else
 	{

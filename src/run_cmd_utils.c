@@ -1,30 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   run_cmd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/20 14:35:54 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/16 21:14:46 by sbueno-s         ###   ########.fr       */
+/*   Created: 2024/07/26 16:16:00 by sofiabueno        #+#    #+#             */
+/*   Updated: 2024/08/17 16:11:37 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-int	main(int ac, char **av, char **envp)
+/**
+ * 
+ */
+char	*concatenate(t_pipex *pipex, char *dir)
 {
-	t_pipex	pipex;
+	char	*temp;
+	char	*path_name;
 
-	if (ac != 5)
-		ft_error("Usage: ./pipex infile cmd1 cmd2 outfile\n");
-	else
+	temp = ft_strjoin(dir, "/");
+	if (!temp)
+		system_error(pipex, "join failed");
+	path_name = ft_strjoin(temp, pipex->exec->args[0]);
+	free(temp);
+	if (!path_name)
+		system_error(pipex, "join failed");
+	return (path_name);
+}
+
+int	find_slash(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
 	{
-		init_pipex(&pipex, ac);
-		commands_init(&pipex, av);
-		create_pipes(&pipex);
-		alloc_pids_arr(&pipex);
-		fork_and_execute(&pipex, ac, av, envp);
+		if (str[i] == '/')
+			return (0);
 	}
-	return (0);
+	return (1);
 }
