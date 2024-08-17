@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:38:45 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/08/16 17:44:14 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/17 16:25:21 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
 /**
- * UTILS LEGIT: YES
+ * concatenates the file name to its potential path
+ * checks if it is an executable path, if so finally sets pathname.
  */
 void	find_and_set_executable_path(t_pipex *pipex)
 {
@@ -37,9 +38,11 @@ void	find_and_set_executable_path(t_pipex *pipex)
 }
 
 /**
- * UTILS LEGIT: YES
+ * iterates over envp and finds path
+ * splits path and save all directories in exec->dirs
+ * calls find_and_set_executable_path
  */
-void	get_right_path(t_pipex *pipex, char **envp)
+void	get_absolute_path(t_pipex *pipex, char **envp)
 {
 	int	found;
 	int	i;
@@ -60,14 +63,13 @@ void	get_right_path(t_pipex *pipex, char **envp)
 		find_and_set_executable_path(pipex);
 	}
 	else
-		pipex->exec->pathname = pipex->exec->args[0];
+		pipex->exec->pathname = ft_strdup(pipex->exec->args[0]);
 }
 
 /**
- * UTILS LEGIT: NO
- * if the command already starts with '/', pathname is complete. ex: /bin/ls
- * MALLOC AQUI! -> exec->pathname = ft_strdup(exec->args[0]);
- * MALLOC AQUI! -> exec->args = ft_split(cmdx, ' ');
+ * Splits the command and saves it in args
+ * checks if the command is an absolute path and sets path-name
+ * if it isnt an absolute path calls get_absolute_path
  */
 void	find_pathname(t_pipex *pipex, char *cmd_i, char **envp)
 {
@@ -84,12 +86,15 @@ void	find_pathname(t_pipex *pipex, char *cmd_i, char **envp)
 		if (pipex->exec->args[0] && (find_slash(pipex->exec->args[0]) == 0))
 			pipex->exec->pathname = ft_strdup(pipex->exec->args[0]);
 		else
-			get_right_path(pipex, envp);
+			get_absolute_path(pipex, envp);
 	}
 	else
 		system_error(pipex, "Error splitting cmdx");
 }
 
+/**
+ * initiates exec struct with all execve commands and runs it.
+ */
 void	run_cmdx(t_pipex *pipex, char *cmd_i, char **envp)
 {
 	t_exec	exec;

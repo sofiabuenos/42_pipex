@@ -80,6 +80,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(NAME_BONUS)
 	make -s -C libft fclean
 	make -s -C ft_printf fclean
 	echo "$(RED)Deleted: $(RESET) $(GREEN)$(NAME)$(RESET)"

@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*   run_cmd_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:16:00 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/08/15 18:45:24 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/17 16:11:37 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
 /**
- * UTILS LEGIT: YES
- * Verificar se nesse caso usaria mesmo system error ou outra forma 
- * de encerrar o programa
+ * 
  */
 char	*concatenate(t_pipex *pipex, char *dir)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:38:45 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/08/16 17:42:00 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/17 16:19:33 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	find_and_set_executable_path(t_pipex *pipex)
 /**
  * UTILS LEGIT: YES
  */
-void	get_right_path(t_pipex *pipex, char **envp)
+void	get_absolute_path(t_pipex *pipex, char **envp)
 {
 	int	found;
 	int	i;
@@ -60,7 +60,7 @@ void	get_right_path(t_pipex *pipex, char **envp)
 		find_and_set_executable_path(pipex);
 	}
 	else
-		pipex->exec->pathname = pipex->exec->args[0];
+		pipex->exec->pathname = ft_strdup(pipex->exec->args[0]);
 }
 
 /**
@@ -84,7 +84,7 @@ void	find_pathname(t_pipex *pipex, char *cmd_i, char **envp)
 		if (pipex->exec->args[0] && (find_slash(pipex->exec->args[0]) == 0))
 			pipex->exec->pathname = ft_strdup(pipex->exec->args[0]);
 		else
-			get_right_path(pipex, envp);
+			get_absolute_path(pipex, envp);
 	}
 	else
 		system_error(pipex, "Error splitting cmdx");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:36:20 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/15 18:47:01 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/17 16:19:33 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		wait_for_child(t_pipex *pipex);
 /*RUN CMD*/
 void	run_cmdx(t_pipex *pipex, char *cmd_i, char **envp);
 /*EXEC_UTILS*/
-void	get_right_path(t_pipex *pipex, char **envp);
+void	get_absolute_path(t_pipex *pipex, char **envp);
 int		find_slash(char *str);
 char	*concatenate(t_pipex *pipex, char *dir);
 /*ERRORS*/

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:35:54 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/16 16:46:26 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/16 21:14:46 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-int	main(int ac, char **av, char *envp[])
+int	main(int ac, char **av, char **envp)
 {
 	t_pipex	pipex;
 

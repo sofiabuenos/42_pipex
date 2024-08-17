@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   redirect_and_wait.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sofiabueno <sofiabueno@student.42.fr>      +#+  +:+       +#+        */
+/*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:16:56 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/08/15 18:13:19 by sofiabueno       ###   ########.fr       */
+/*   Updated: 2024/08/17 16:27:56 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ void	close_fds(t_pipex *pipex)
 	}
 }
 
+/**
+ * opens infile and redirects stdin to infile
+ * redirects stdout to the writing end of the pipe.
+ */
 void	infile_redirect(t_pipex *pipex, char **av)
 {
 	int	infile;
@@ -41,6 +45,10 @@ void	infile_redirect(t_pipex *pipex, char **av)
 	close(infile);
 }
 
+/**
+ * Opens outfile and redirects infile to the previous pipe
+ * redirects stdout to the outfile
+ */
 void	outfile_redirect(t_pipex *pipex, int ac, char **av, int i)
 {
 	int	outfile;
