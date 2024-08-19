@@ -6,14 +6,15 @@
 /*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:38:45 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/08/17 16:19:33 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:34:27 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
 /**
- * UTILS LEGIT: YES
+ * concatenates the file name to its potential path
+ * checks if it is an executable path, if so finally sets pathname.
  */
 void	find_and_set_executable_path(t_pipex *pipex)
 {
@@ -37,7 +38,9 @@ void	find_and_set_executable_path(t_pipex *pipex)
 }
 
 /**
- * UTILS LEGIT: YES
+ * iterates over envp and finds path
+ * splits path and save all directories in exec->dirs
+ * calls find_and_set_executable_path
  */
 void	get_absolute_path(t_pipex *pipex, char **envp)
 {
@@ -64,10 +67,9 @@ void	get_absolute_path(t_pipex *pipex, char **envp)
 }
 
 /**
- * UTILS LEGIT: NO
- * if the command already starts with '/', pathname is complete. ex: /bin/ls
- * MALLOC AQUI! -> exec->pathname = ft_strdup(exec->args[0]);
- * MALLOC AQUI! -> exec->args = ft_split(cmdx, ' ');
+ * Splits the command and saves it in args
+ * checks if the command is an absolute path and sets path-name
+ * if it isnt an absolute path calls get_absolute_path
  */
 void	find_pathname(t_pipex *pipex, char *cmd_i, char **envp)
 {
@@ -76,7 +78,10 @@ void	find_pathname(t_pipex *pipex, char *cmd_i, char **envp)
 	if (cmd_i[0] == '\0')
 	{
 		pipex->status = 127;
-		system_error(pipex, "Command not found");
+		free_mem(pipex);
+		free_exec_struct(pipex);
+		ft_putstr_fd("command not found\n", 2);
+		exit(127);
 	}
 	pipex->exec->args = ft_split(cmd_i, ' ');
 	if (pipex->exec->args)
@@ -90,6 +95,9 @@ void	find_pathname(t_pipex *pipex, char *cmd_i, char **envp)
 		system_error(pipex, "Error splitting cmdx");
 }
 
+/**
+ * initiates exec struct with all execve commands and runs it.
+ */
 void	run_cmdx(t_pipex *pipex, char *cmd_i, char **envp)
 {
 	t_exec	exec;

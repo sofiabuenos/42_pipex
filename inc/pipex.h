@@ -6,7 +6,7 @@
 /*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:36:20 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/17 16:19:33 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:29:44 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ void	ft_error(char *msg);
 void	system_error(t_pipex *pipex, char *msg);
 void	free_matrix(char **matrix);
 void	free_mem(t_pipex *pipex);
+void	free_exec_struct(t_pipex *pipex);
 
 #endif

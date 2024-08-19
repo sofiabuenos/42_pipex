@@ -6,7 +6,7 @@
 /*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:16:56 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/08/17 16:27:56 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:45:35 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	infile_redirect(t_pipex *pipex, char **av)
 	}
 	infile = open(av[1], O_RDONLY);
 	if (infile == -1)
-		system_error(pipex, "Error opening infile");
+		system_error(pipex, "infile");
 	dup2(infile, STDIN_FILENO);
 	dup2(pipex->p_fds[0].fd[1], STDOUT_FILENO);
 	close(infile);
@@ -60,7 +60,7 @@ void	outfile_redirect(t_pipex *pipex, int ac, char **av, int i)
 	}
 	outfile = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile == -1)
-		system_error (pipex, "Error opening file");
+		system_error (pipex, "outfile");
 	dup2(pipex->p_fds[i - 1].fd[0], STDIN_FILENO);
 	dup2(outfile, STDOUT_FILENO);
 	close(outfile);

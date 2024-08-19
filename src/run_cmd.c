@@ -6,7 +6,7 @@
 /*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:38:45 by sofiabueno        #+#    #+#             */
-/*   Updated: 2024/08/17 16:25:21 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:34:27 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ void	find_pathname(t_pipex *pipex, char *cmd_i, char **envp)
 	if (cmd_i[0] == '\0')
 	{
 		pipex->status = 127;
-		system_error(pipex, "Command not found");
+		free_mem(pipex);
+		free_exec_struct(pipex);
+		ft_putstr_fd("command not found\n", 2);
+		exit(127);
 	}
 	pipex->exec->args = ft_split(cmd_i, ' ');
 	if (pipex->exec->args)

@@ -6,7 +6,7 @@
 /*   By: sbueno-s <sbueno-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:02:25 by sbueno-s          #+#    #+#             */
-/*   Updated: 2024/08/16 20:54:36 by sbueno-s         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:11:32 by sbueno-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,23 @@ void	free_mem(t_pipex *pipex)
 		free(pipex->pids);
 }
 
-void	system_error(t_pipex *pipex, char *msg)
+void	free_exec_struct(t_pipex *pipex)
 {
-	int	exitstatus;
-
-	exitstatus = pipex->status;
-	free_mem(pipex);
 	if (pipex->exec && pipex->exec->args)
 		free_matrix(pipex->exec->args);
 	if (pipex->exec && pipex->exec->dirs)
 		free_matrix(pipex->exec->dirs);
 	if (pipex->exec && pipex->exec->pathname)
 		free(pipex->exec->pathname);
+}
+
+void	system_error(t_pipex *pipex, char *msg)
+{
+	int	exitstatus;
+
+	exitstatus = pipex->status;
+	free_mem(pipex);
+	free_exec_struct(pipex);
 	perror(msg);
 	exit(exitstatus);
 }
